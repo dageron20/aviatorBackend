@@ -34,12 +34,12 @@ app.get('/api/fields', (req, res) => {
 
 app.post('/api/update-fields', (req, res) => {
   const { field_1, field_2 } = req.body;
-  db.run("UPDATE MainInfo SET field_1 = ?, field_2 = ? WHERE rowid = 1", [field_1, field_2], (err) => {
-    if (err) {
-      res.json({ message: "Failed to update fields" });
-    } else {
+  db.run("UPDATE MainInfo SET field_1 = ?, field_2 = ? WHERE id = 1", [field_1, field_2], (err) => {
+      if (err) {
+          res.status(500).json({ message: "Failed to update fields" });
+          return;
+      }
       res.json({ message: "Fields updated successfully" });
-    }
   });
 });
 
