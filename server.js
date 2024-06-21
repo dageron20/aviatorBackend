@@ -15,17 +15,6 @@ const db = new sqlite3.Database('./aviator.db', (err) => {
     }
 });
 
-// db.serialize(() => {
-//   db.run("CREATE TABLE users (login TEXT, password TEXT)");
-//   db.run("CREATE TABLE data (field1 INTEGER, field2 INTEGER)");
-
-//   const stmt = db.prepare("INSERT INTO users VALUES (?, ?)");
-//   stmt.run("admin", "password");  // Логин и пароль для входа
-//   stmt.finalize();
-
-//   db.run("INSERT INTO data (field1, field2) VALUES (0, 0)"); // Начальные значения полей
-// });
-
 app.post('/api/login', (req, res) => {
   const { login, password } = req.body;
   db.get("SELECT * FROM Accounts WHERE login = ? AND password = ?", [login, password], (err, row) => {
@@ -38,14 +27,14 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/fields', (req, res) => {
-  db.get("SELECT field1, field2 FROM data", (err, row) => {
+  db.get("SELECT field_1, field_2 FROM MainInfo", (err, row) => {
     res.json(row);
   });
 });
 
 app.post('/api/update-fields', (req, res) => {
-  const { field1, field2 } = req.body;
-  db.run("UPDATE data SET field1 = ?, field2 = ? WHERE rowid = 1", [field1, field2], (err) => {
+  const { field_1, field_2 } = req.body;
+  db.run("UPDATE MainInfo SET field_1 = ?, field_2 = ? WHERE rowid = 1", [field_1, field_2], (err) => {
     if (err) {
       res.json({ message: "Failed to update fields" });
     } else {
