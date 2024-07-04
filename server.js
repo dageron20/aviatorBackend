@@ -9,7 +9,7 @@ const PORT = 5000;
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://147.45.185.47',
+  origin: 'http://odds96aviator.in',
 }));
 
 const db = new sqlite3.Database('./aviator.db', (err) => {
